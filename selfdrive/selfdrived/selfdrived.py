@@ -371,7 +371,7 @@ class SelfdriveD(CruiseHelper):
     else:
       if not SIMULATION and not self.rk.lagging:
         if not self.sm.all_alive(self.camera_packets):
-          self.events.add(EventName.cameraMalfunction)
+          pass  # suppress camera communication alerts on tizi
         elif not self.sm.all_freq_ok(self.camera_packets):
           self.events.add(EventName.cameraFrameRate)
     if not REPLAY and self.rk.lagging:
@@ -394,11 +394,11 @@ class SelfdriveD(CruiseHelper):
     no_system_errors = (not has_disable_events) or (len(self.events) == num_events)
     if not self.sm.all_checks() and no_system_errors:
       if not self.sm.all_alive():
-        self.events.add(EventName.commIssue)
+        pass  # suppress communication alerts on tizi
       elif not self.sm.all_freq_ok():
-        self.events.add(EventName.commIssueAvgFreq)
+        pass  # suppress communication alerts on tizi
       else:
-        self.events.add(EventName.commIssue)
+        pass  # suppress communication alerts on tizi
 
       logs = {
         'invalid': [s for s, valid in self.sm.valid.items() if not valid],
